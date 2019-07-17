@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>First React Component</title>
+</head>
+
+<body>
+    <div id="mountNode"></div>
+    <div id="mountNode2"></div>
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script>
+        const render = () => {
+            document.getElementById("mountNode").innerHTML = `
+        <div>
+        Hello HTML
+        <input/>
+        <pre>${(new Date).toLocaleTimeString()}</pre>
+        </div>
+        `;
+
+
+
+            ReactDOM.render(
+                React.createElement(
+                    "div",
+                    null,
+                    "Hello React",
+                    React.createElement("input", null),
+                    React.createElement("pre", null, (new Date).toLocaleTimeString())
+                ),
+                document.getElementById('mountNode2')
+            );
+        }
+        setInterval(render,1000);
+    </script>
+</body>
+
+</html>
