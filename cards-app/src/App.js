@@ -2,7 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import './main.less';
-import { tsConstructorType } from '@babel/types';
+import axios from 'axios';
 
 
 const testData = [{
@@ -13,7 +13,7 @@ const testData = [{
 
 const CardList = (props) => (
   <div>
-    {props.profiles.map(profile => <Card {...profile} />)}
+    {props.profiles.map(profile => <Card key={profile.id} {...profile} />)}
 
   </div>
 )
@@ -21,12 +21,13 @@ class Form extends React.Component {
   state = {
     userName: ''
   };
-  handleSubmit = (event) => {
+  handleSubmit = async (event) => {
 
     event.preventDefault();
-    console.log(
-      this.state.userName
-    );
+    const resp = await axios.get(`https://api.github.com/users/${this.state.userName}`);
+    this.props.onSubmit(resp.data);
+    this.setState({userName:''});
+
   }
   render() {
     return (
@@ -58,15 +59,21 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      profiles: testData
+      profiles: []
 
     }
 
   }
+  addNewProfile = (profileData) => {
+    this.setState(prevState=>({
+      profiles:[...prevState.profiles,profileData]
+    }));
+    console.log('App', profileData);
+  }
   render() {
     return (
       <div className="App">
-        <Form />
+        <Form onSubmit={this.addNewProfile} />
         <CardList profiles={this.state.profiles}></CardList>
       </div>
     );
