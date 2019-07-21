@@ -59,8 +59,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      profiles: []
-
+      profiles: [],
+      title:"Github Cards App"
     }
 
   }
@@ -72,7 +72,9 @@ class App extends React.Component {
   }
   render() {
     return (
+
       <div className="App">
+        <div className="header">{this.state.title}</div>
         <Form onSubmit={this.addNewProfile} />
         <CardList profiles={this.state.profiles}></CardList>
       </div>
